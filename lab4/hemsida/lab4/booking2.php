@@ -1,0 +1,40 @@
+<?php
+	require_once('database.inc.php');
+	session_start();
+	$db = $_SESSION['db'];
+	$userId = $_SESSION['userId'];
+	$movieName = $_POST['movieName'];
+	$_SESSION['movieName'] = $movieName;
+	
+	$db->openConnection();
+	
+	$datum = $db->getDates($movieName);
+	$db->closeConnection();
+?>
+
+<html>
+<head><title>Booking 2</title><head>
+<body><h1>Booking 2</h1>
+	Current user: <?php print $userId ?>
+	<p>
+	Date for this movie:
+	<p>
+	<form method=post action="booking3.php">
+		<select name="datum" size=10>
+		<?php
+			$first = true;
+			foreach ($datum as $filmdatum) {
+				if ($first) {
+					print "<option selected>";
+					$first = false;
+				} else {
+					print "<option>";
+				}
+				print $filmdatum;
+			}
+		?>
+		</select>		
+		<input type=submit value="Select date">
+	</form>
+</body>
+</html>

@@ -1,0 +1,65 @@
+Lab1 EDA216
+
+a)
+select firstname, lastname from students;
+b)
+select firstname, lastname from students order by firstname asc;
+select firstname, lastname from students order by lastname asc;
+c)
+select * from students where pnbr < '86';
+d)
+select * from students where mod(substr(pnbr,10,1),2) = '0';
+e)
+select count(*) from students;
+f)
+select * from courses where coursecode like 'fma%';
+g)
+select * from courses where credits > 7.5;
+h)
+select count(*) from courses group by level;
+i)
+EVA ALM:
+
+create view EvaAlm as select pnbr from students	where firstname = 'Eva' and lastname = 'Alm';
+
+select coursename from takencourses where pNbr = '910101-1234';
+
+select courseCode from takenCourses where pNbr = (select * from EvaAlm);
+j)
+select coursename, credits from courses where courses.coursecode in (select coursecode from takencourses where pnbr = '910101-1234');
+
+	EVA ALM:
+
+select coursename, credits from courses where courses.coursecode in (select coursecode from takencourses where pNbr = (select * from EvaAlm));
+k)
+select sum(credits) from courses where courses.coursecode in (select coursecode from takencourses where pNbr = '910101-1234');
+EVA ALM:
+select sum(credits) from courses where courses.coursecode in (select coursecode from takencourses where pNbr = (Select * from EvaAlm));
+l)
+select avg(grade) from takencourses where pNbr = '910101-1234';
+
+EVA ALM:
+
+select avg(grade) from takencourses where pNbr = (select * from EvaAlm);
+n)
+select * from students where pnbr not in (select pnbr from takencourses);
+o)
+
+create view maxgrades3 as select pnbr, avg(grade) as avg from takencourses group by pnbr order by avg(grade) desc;
+select * from maxgrades3 where avg = (select max(avg) from maxgrades3);
+p) 
+
+create view pnbrcourse as select students.pnbr, coursecode from students left outer join takencourses on students.pnbr = takencourses.pnbr;
+
+select pnbrcourse.pnbr, coalesce(NULL, sum(credits), 0) as points  from pnbrcourse left outer join courses on pnbrcourse.coursecode = courses.coursecode  group by pnbr order by points desc;
+
+
+q) 
+
+SELECT distinct a.firstname, a.lastname, a.pNbr FROM students a INNER JOIN students b ON a.firstname = b.firstname and a.lastname = b.lastname WHERE a.pnbr != b.pnbr;
+
+
+
+
+
+

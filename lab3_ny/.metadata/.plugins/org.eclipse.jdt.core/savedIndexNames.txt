@@ -1,0 +1,5 @@
+INDEX VERSION 1.127+/Users/Tonybawz/Documents/Programmering/Datasbas/lab3_ny/.metadata/.plugins/org.eclipse.jdt.core
+2561530888.index
+1271342938.index
+1109683653.index
+1431162455.index

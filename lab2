@@ -1,0 +1,21 @@
+set foreign_key_checks = 0;
+drop table if exists theater;
+drop table if exists movie;
+drop table if exists users;
+drop table if exists performance;
+drop table if exists reservation;
+
+set foreign_key_checks = 1;
+create table users(username varchar(255) not null, fullname varchar(255), phonenbr int, address varchar(255), primary key (username));
+
+create table movie(moviename varchar(255), primary key (moviename));
+
+create table theater(theatername varchar(255), seats int, primary key (theatername));
+
+create table performance(moviename varchar(255), showdate date, theatername varchar(255), primary key(moviename, showdate),
+ foreign key (moviename) references movie(moviename) on delete cascade on update cascade,
+ foreign key (theatername) references theater(theatername) on delete cascade on update cascade);
+
+create table reservation(nbr integer auto_increment, username varchar(255), showdate date, moviename varchar(255), primary key (nbr), foreign key (username) references users(username) on delete cascade on update cascade, foreign key (moviename, showdate) references performance(moviename, showdate) on delete cascade on update cascade);
+
+insert into Users(username, fullname, phonenbr, address) VALUES('A1', 'Anna', '1234567', 'Tjoffgatan 1'),('A2', 'Björne', '1234567', 'Tjoffgatan 2'),('B1', 'Lolking', '1337', 'Aramgatan 1337');
